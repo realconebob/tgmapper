@@ -1,3 +1,5 @@
+package interfaces;
+
 public interface IGraph {
     void addNode(INode node);
     void delNode(INode node);
@@ -12,6 +14,10 @@ public interface IGraph {
     void delManyConnections(IConnection[] connections);
     void setConnections(IConnection[] connections);
     IConnection[] getConnections();
+
+    void connectNodes(INode start, INode end, int weight);
+    void disconnectNodes(INode start, INode end);
+
 
     // TODO: Outline some useful analysis functions
 }
