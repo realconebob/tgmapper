@@ -1,20 +1,21 @@
 package interfaces;
-import org.drinkless.tdlib.TdApi;
-
 import java.util.List;
 
-public interface INode {
-    void addIncoming(IConnection connection);
-    void delIncoming(IConnection connection);
-    void addManyIncoming(List<IConnection> connections);
-    void delManyIncoming(List<IConnection> connections);
-    void setIncoming(List<IConnection> connections);
-    List<IConnection> getIncoming();
+public interface INode<T> {
+    void setNodeData(T data);
+    T getNodeData();
 
-    void addOutgoing(IConnection connection);
-    void delOutgoing(IConnection connection);
-    void addManyOutgoing(List<IConnection> connections);
-    void delManyOutgoing(List<IConnection> connections);
-    void setOutgoing(List<IConnection> connections);
-    List<IConnection> getOutgoing();
+    void addIncoming(IConnection<T> connection);
+    void delIncoming(IConnection<T> connection);
+    void addManyIncoming(List<IConnection<T>> connections);
+    void delManyIncoming(List<IConnection<T>> connections);
+    void setIncoming(List<IConnection<T>> connections);
+    List<IConnection<T>> getIncoming();
+
+    void addOutgoing(IConnection<T> connection);
+    void delOutgoing(IConnection<T> connection);
+    void addManyOutgoing(List<IConnection<T>> connections);
+    void delManyOutgoing(List<IConnection<T>> connections);
+    void setOutgoing(List<IConnection<T>> connections);
+    List<IConnection<T>> getOutgoing();
 }

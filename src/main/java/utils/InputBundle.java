@@ -42,7 +42,7 @@ public class InputBundle<T> {
         try {
             checker.call(input);
         } catch(Exception e) {
-            System.err.println((msg != null ? msg : "") + e.getMessage());
+            System.err.println((msg != null ? (msg + "\n\t> ") : "") + e.getMessage());
             throw e;
         }
     }
