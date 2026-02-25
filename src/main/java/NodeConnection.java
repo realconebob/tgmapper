@@ -23,13 +23,21 @@ public class NodeConnection implements IConnection<TdApi.Chat> {
 
     @Override
     public void setStart(INode<TdApi.Chat> node) {
-        InputBundle.checkInput(InputBundle.checkNull(node, "<Connection::setStart> Error: node is null"));
+        InputBundle.checkInput(new InputBundle<>(node, (start) -> {
+            if(start == null) throw new IllegalArgumentException("start node is null");
+            if(start == end) throw new IllegalArgumentException("start node is also the end node");
+            return null;
+        }, "<NodeConnection::setStart> Error: Could not set starting node. Reason: "));
         start = node;
     }
 
     @Override
     public void setEnd(INode<TdApi.Chat> node) {
-        InputBundle.checkInput(InputBundle.checkNull(node, "<Connection::setEnd> Error: node is null"));
+        InputBundle.checkInput(new InputBundle<>(node, (end) -> {
+            if(end == null) throw new IllegalArgumentException("end node is null");
+            if(end == start) throw new IllegalArgumentException("end node is also the start node");
+            return null;
+        }, "<NodeConnection::setEnd> Error: Could not set ending node. Reason: "));
         end = node;
     }
 

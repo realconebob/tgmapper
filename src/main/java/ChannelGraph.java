@@ -109,7 +109,7 @@ public class ChannelGraph implements IGraph<TdApi.Chat> {
         InputBundle.checkInputs(new InputBundle[]{
             InputBundle.checkNull       (start,     "<ChannelGraph::connectNodes> Error: start node is null"),
             InputBundle.checkNull       (end,       "<ChannelGraph::connectNodes> Error: end node is null"),
-            InputBundle.notNegative(weight,    "<ChannelGraph::connectNodes> Error: weight is less than zero"),
+            InputBundle.notNegative(weight,         "<ChannelGraph::connectNodes> Error: weight is less than zero"),
         });
 
         IConnection<TdApi.Chat> con = new NodeConnection(start, end, weight);

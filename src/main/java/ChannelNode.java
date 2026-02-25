@@ -3,6 +3,7 @@ import org.drinkless.tdlib.TdApi;
 import utils.InputBundle;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ChannelNode implements INode<TdApi.Chat> {
@@ -11,16 +12,23 @@ public class ChannelNode implements INode<TdApi.Chat> {
     private final List<IConnection<TdApi.Chat>> outgoing;
 
     public ChannelNode() {
+        chatInfo = null;
         incoming = new ArrayList<>();
         outgoing = new ArrayList<>();
     }
-    public ChannelNode(List<IConnection<TdApi.Chat>> incoming, List<IConnection<TdApi.Chat>> outgoing) {
+    public ChannelNode(TdApi.Chat chatInfo, List<IConnection<TdApi.Chat>> incoming, List<IConnection<TdApi.Chat>> outgoing) {
         this();
+
+        try {
+            setNodeData(chatInfo);
+        } catch (Exception ex) {
+            throw new IllegalArgumentException("<ChannelNode::Constructor(chatInfo, incoming, outgoing)> Error: could not set node data");
+        }
 
         try {
             addManyIncoming(incoming);
         } catch (Exception ex) {
-            throw new IllegalArgumentException("<ChannelNode::Constructor(incoming, outgoing)> Error: Null object in incoming array" + ex.getMessage());
+            throw new IllegalArgumentException("<ChannelNode::Constructor(chatInfo, incoming, outgoing)> Error: Null object in incoming array" + ex.getMessage());
         }
 
         try {
@@ -29,16 +37,78 @@ public class ChannelNode implements INode<TdApi.Chat> {
             throw new IllegalArgumentException("<ChannelNode::Constructor(incoming, outgoing)> Error: Null object in outgoing array" + ex.getMessage());
         }
     }
-    public static ChannelNode noOutgoing(List<IConnection<TdApi.Chat>> incoming) {
-        return new ChannelNode(incoming, new ArrayList<>());
-    }
-    public static ChannelNode noIncoming(List<IConnection<TdApi.Chat>> outgoing) {
-        return new ChannelNode(new ArrayList<>(), outgoing);
+    public static class Builder {
+        private TdApi.Chat chatInfo;
+        private List<IConnection<TdApi.Chat>> incoming;
+        private List<IConnection<TdApi.Chat>> outgoing;
+
+        public Builder() {
+            this.chatInfo = null;
+            this.incoming = new ArrayList<>();
+            this.outgoing = new ArrayList<>();
+        }
+        public Builder(TdApi.Chat chatInfo, List<IConnection<TdApi.Chat>> incoming, List<IConnection<TdApi.Chat>> outgoing) {
+            this.chatInfo = chatInfo;
+            this.incoming = incoming;
+            this.outgoing = outgoing;
+        }
+
+        public ChannelNode build() {
+            return new ChannelNode(this.chatInfo, this.incoming, this.outgoing);
+        }
+
+        Builder setChatInfo(TdApi.Chat chatInfo) {
+            this.chatInfo = chatInfo;
+            return this;
+        }
+
+        Builder setIncoming(List<IConnection<TdApi.Chat>> incoming) {
+            this.incoming = incoming;
+            return this;
+        }
+        Builder addIncoming(IConnection<TdApi.Chat> connection) {
+            this.incoming.add(connection);
+            return this;
+        }
+        Builder delIncoming(IConnection<TdApi.Chat> connection) {
+            this.incoming.remove(connection);
+            return this;
+        }
+        Builder addAllIncoming(Collection<IConnection<TdApi.Chat>> connections) {
+            this.incoming.addAll(connections);
+            return this;
+        }
+        Builder delAllIncoming(Collection<IConnection<TdApi.Chat>> connections) {
+            this.incoming.removeAll(connections);
+            return this;
+        }
+
+
+        Builder setOutgoing(List<IConnection<TdApi.Chat>> incoming) {
+            this.outgoing = incoming;
+            return this;
+        }
+        Builder addOutgoing(IConnection<TdApi.Chat> connection) {
+            this.outgoing.add(connection);
+            return this;
+        }
+        Builder delOutgoing(IConnection<TdApi.Chat> connection) {
+            this.outgoing.remove(connection);
+            return this;
+        }
+        Builder addAllOutgoing(Collection<IConnection<TdApi.Chat>> connections) {
+            this.outgoing.addAll(connections);
+            return this;
+        }
+        Builder delAllOutgoing(Collection<IConnection<TdApi.Chat>> connections) {
+            this.outgoing.removeAll(connections);
+            return this;
+        }
     }
 
     @Override
     public void setNodeData(TdApi.Chat data) {
-        InputBundle.checkInput(InputBundle.checkNull(data, ""));
+        InputBundle.checkInput(InputBundle.checkNull(data, "<ChannelNode::setNodeData> Error: chat data is null"));
         chatInfo = data;
     }
 
