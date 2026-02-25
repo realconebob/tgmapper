@@ -107,7 +107,7 @@ public class ChannelGraph implements IGraph {
         InputBundle.checkInputs(new InputBundle[]{
             InputBundle.checkNull       (start,     "<ChannelGraph::connectNodes> Error: start node is null"),
             InputBundle.checkNull       (end,       "<ChannelGraph::connectNodes> Error: end node is null"),
-            InputBundle.greaterThanZero (weight,    "<ChannelGraph::connectNodes> Error: weight is less than zero"),
+            InputBundle.notNegative(weight,    "<ChannelGraph::connectNodes> Error: weight is less than zero"),
         });
 
         IConnection con = new NodeConnection(start, end, weight);

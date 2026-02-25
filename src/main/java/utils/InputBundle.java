@@ -29,10 +29,10 @@ public class InputBundle<T> {
             return null;
         }, msg);
     }
-    static public InputBundle<? extends Number> greaterThanZero(Number input, String msg) {
+    static public InputBundle<? extends Number> notNegative(Number input, String msg) {
         return new InputBundle<>(input, data -> {
-            if(data == null) throw new IllegalArgumentException("<InputBundle::greaterThanZero>: given input was null");
-            if(data.doubleValue() < 0) throw new IllegalArgumentException("<InputBundle::greaterThanZero>: given input was negative");
+            if(data == null) throw new IllegalArgumentException("<InputBundle::notNegative>: given input was null");
+            if(data.doubleValue() < 0) throw new IllegalArgumentException("<InputBundle::notNegative>: given input was negative");
             return null;
         }, msg);
     }
@@ -42,7 +42,7 @@ public class InputBundle<T> {
         try {
             checker.call(input);
         } catch(Exception e) {
-            System.err.println(msg + e.getMessage());
+            System.err.println((msg != null ? msg : "") + e.getMessage());
             throw e;
         }
     }

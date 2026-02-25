@@ -48,31 +48,20 @@ public class ChannelNode implements INode {
 
     @Override
     public void addManyIncoming(List<IConnection> connections) {
-        InputBundle.checkInput(InputBundle.checkNull(connections, "<ChannelNode::addManyIncoming> Error: connections is null"));
-        for (IConnection connection : connections) {
-            InputBundle.checkInput(InputBundle.checkNull(connection, "<ChannelNode::addManyIncoming> Error: connection in connections array is null"));
-        }
+        InputBundle.checkInput(InputBundle.nullList(connections, "<ChannelNode::addManyIncoming> Error: connections is null, or contains null entry"));
 
         incoming.addAll(connections);
     }
 
     @Override
     public void delManyIncoming(List<IConnection> connections) {
-        InputBundle.checkInput(InputBundle.checkNull(connections, "<ChannelNode::delManyIncoming> Error: connections is null"));
-        for (IConnection connection : connections) {
-            InputBundle.checkInput(InputBundle.checkNull(connection, "<ChannelNode::delManyIncoming> Error: connection in connections array is null"));
-        }
-
+        InputBundle.checkInput(InputBundle.nullList(connections, "<ChannelNode::delManyIncoming> Error: connections is null, or contains null entry"));
         incoming.removeAll(connections);
     }
 
     @Override
     public void setIncoming(List<IConnection> connections) {
-        InputBundle.checkInput(InputBundle.checkNull(connections, "<ChannelNode::setIncoming> Error: connections is null"));
-        for(IConnection connection : connections) {
-            InputBundle.checkInput(InputBundle.checkNull(connection, "<ChannelNode::setIncoming> Error: connection in connections array is null"));
-        }
-
+        InputBundle.checkInput(InputBundle.nullList(connections, "<ChannelNode::setIncoming> Error: connections is null, or contains null entry"));
         incoming.clear();
         incoming.addAll(connections);
     }
@@ -96,31 +85,19 @@ public class ChannelNode implements INode {
 
     @Override
     public void addManyOutgoing(List<IConnection> connections) {
-        InputBundle.checkInput(InputBundle.checkNull(connections, "<ChannelNode::addManyOutgoing> Error: connections is null"));
-        for (IConnection connection : connections) {
-            InputBundle.checkInput(InputBundle.checkNull(connection, "<ChannelNode::addManyOutgoing> Error: connection in connections array is null"));
-        }
-
+        InputBundle.checkInput(InputBundle.nullList(connections, "<ChannelNode::addManyOutgoing> Error: connections is null, or contains null entry"));
         outgoing.addAll(connections);
     }
 
     @Override
     public void delManyOutgoing(List<IConnection> connections) {
-        InputBundle.checkInput(InputBundle.checkNull(connections, "<ChannelNode::delManyOutgoing> Error: connections is null"));
-        for (IConnection connection : connections) {
-            InputBundle.checkInput(InputBundle.checkNull(connection, "<ChannelNode::delManyOutgoing> Error: connection in connections array is null"));
-        }
-
+        InputBundle.checkInput(InputBundle.nullList(connections, "<ChannelNode::delManyOutgoing> Error: connections is null, or contains null entry"));
         outgoing.removeAll(connections);
     }
 
     @Override
     public void setOutgoing(List<IConnection> connections) {
-        InputBundle.checkInput(InputBundle.checkNull(connections, "<ChannelNode::setOutgoing> Error: connections is null"));
-        for(IConnection connection : connections) {
-            InputBundle.checkInput(InputBundle.checkNull(connection, "<ChannelNode::setOutgoing> Error: connection in connections array is null"));
-        }
-
+        InputBundle.checkInput(InputBundle.nullList(connections, "<ChannelNode::setOutgoing> Error: connections is null, or contains null entry"));
         outgoing.clear();
         outgoing.addAll(connections);
     }

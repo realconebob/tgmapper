@@ -44,7 +44,7 @@ public class NodeConnection implements IConnection {
 
     @Override
     public void setConnectionWeight(int weight) {
-        InputBundle.checkInput(InputBundle.greaterThanZero(weight, "<Connection::setConnectionWeight> Error: Connection weight must be greater than zero>"));
+        InputBundle.checkInput(InputBundle.notNegative(weight, "<Connection::setConnectionWeight> Error: Connection weight must be greater than zero>"));
         this.weight = weight;
     }
 
