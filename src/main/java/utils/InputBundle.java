@@ -1,6 +1,7 @@
 package utils;
 import interfaces.*;
 
+import java.util.Collection;
 import java.util.List;
 
 public class InputBundle<T> {
@@ -20,8 +21,8 @@ public class InputBundle<T> {
             return null;
         }, msg);
     }
-    static public InputBundle<? extends List<?>> nullList(List<?> input, String msg) {
-        return new InputBundle<List<?>>(input, data -> {
+    static public InputBundle<? extends Collection<?>> nullList(Collection<?> input, String msg) {
+        return new InputBundle<>(input, data -> {
             if(data == null) throw new IllegalArgumentException("<InputBundle::nullList>: input list was null");
             for(Object o : data) {
                 if(o == null) throw new IllegalArgumentException("<InputBundle::nullList>: given input in list was null");
