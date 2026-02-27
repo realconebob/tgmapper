@@ -1,11 +1,11 @@
 package interfaces;
 
 public interface IConnection<T> {
-    void setStart(INode<T> node);
-    void setEnd(INode<T> node);
+    IConnection<T> setStart(INode<T> node);
+    IConnection<T> setEnd(INode<T> node);
     INode<T> getStart();
     INode<T> getEnd();
 
-    void setConnectionWeight(int weight);
-    int getConnectionWeight();
+    IConnection<T> setWeight(int weight);
+    int getWeight();
 }

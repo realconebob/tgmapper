@@ -3,18 +3,17 @@ import interfaces.IGraph;
 import interfaces.INode;
 import utils.InputBundle;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.drinkless.tdlib.TdApi;
 
 public class ChannelGraph implements IGraph<TdApi.Chat> {
-    private final List<INode<TdApi.Chat>> nodes;
-    private final List<IConnection<TdApi.Chat>> connections;
+    private final Set<INode<TdApi.Chat>> nodes;
+    private final Set<IConnection<TdApi.Chat>> connections;
 
     private ChannelGraph() {
-        nodes = new ArrayList<>();
-        connections = new ArrayList<>();
+        nodes = new HashSet<>();
+        connections = new HashSet<>();
     }
     public ChannelGraph(List<INode<TdApi.Chat>> nodes, List<IConnection<TdApi.Chat>> connections) {
         this();
@@ -45,27 +44,27 @@ public class ChannelGraph implements IGraph<TdApi.Chat> {
     }
 
     @Override
-    public void addManyNodes(List<INode<TdApi.Chat>> nodes) {
+    public void addManyNodes(Collection<INode<TdApi.Chat>> nodes) {
         InputBundle.checkInput(InputBundle.nullList(nodes, "<ChannelGraph::addManyNodes> Error: nodes is null, or contains null entry"));
         this.nodes.addAll(nodes);
     }
 
     @Override
-    public void delManyNodes(List<INode<TdApi.Chat>> nodes) {
+    public void delManyNodes(Collection<INode<TdApi.Chat>> nodes) {
         InputBundle.checkInput(InputBundle.nullList(nodes, "<ChannelGraph::delManyNodes> Error: nodes is null, or contains null entry"));
-        this.nodes.removeAll(nodes);
+        nodes.forEach(this.nodes::remove);
     }
 
     @Override
-    public void setNodes(List<INode<TdApi.Chat>> nodes) {
+    public void setNodes(Collection<INode<TdApi.Chat>> nodes) {
         InputBundle.checkInput(InputBundle.nullList(nodes, "<ChannelGraph::setNodes> Error: nodes is null, or contains null entry"));
         this.nodes.clear();
         this.nodes.addAll(nodes);
     }
 
     @Override
-    public List<INode<TdApi.Chat>> getNodes() {
-        return new ArrayList<>(nodes);
+    public Set<INode<TdApi.Chat>> getNodes() {
+        return new HashSet<>(nodes);
     }
 
     @Override
@@ -81,27 +80,27 @@ public class ChannelGraph implements IGraph<TdApi.Chat> {
     }
 
     @Override
-    public void addManyConnections(List<IConnection<TdApi.Chat>> connections) {
+    public void addManyConnections(Collection<IConnection<TdApi.Chat>> connections) {
         InputBundle.checkInput(InputBundle.nullList(connections, "<ChannelGraph::addManyConnections> Error: connections is null, or contains a null entry"));
         this.connections.addAll(connections);
     }
 
     @Override
-    public void delManyConnections(List<IConnection<TdApi.Chat>> connections) {
+    public void delManyConnections(Collection<IConnection<TdApi.Chat>> connections) {
         InputBundle.checkInput(InputBundle.nullList(connections, "<ChannelGraph::delManyConnections> Error: connections is null, or contains a null entry"));
-        this.connections.removeAll(connections);
+        connections.forEach(this.connections::remove);
     }
 
     @Override
-    public void setConnections(List<IConnection<TdApi.Chat>> connections) {
+    public void setConnections(Collection<IConnection<TdApi.Chat>> connections) {
         InputBundle.checkInput(InputBundle.nullList(connections, "<ChannelGraph::setConnections> Error: connections is null, or contains a null entry"));
         this.connections.clear();
         this.connections.addAll(connections);
     }
 
     @Override
-    public List<IConnection<TdApi.Chat>> getConnections() {
-        return new ArrayList<>(connections);
+    public Set<IConnection<TdApi.Chat>> getConnections() {
+        return new HashSet<>(connections);
     }
 
     @Override

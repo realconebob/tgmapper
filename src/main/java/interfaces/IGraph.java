@@ -1,20 +1,21 @@
 package interfaces;
-import java.util.List;
+import java.util.Collection;
+import java.util.Set;
 
 public interface IGraph<T> {
     void addNode(INode<T> node);
     void delNode(INode<T> node);
-    void addManyNodes(List<INode<T>> connections);
-    void delManyNodes(List<INode<T>> connections);
-    void setNodes(List<INode<T>> nodes);
-    List<INode<T>> getNodes();
+    void addManyNodes(Collection<INode<T>> connections);
+    void delManyNodes(Collection<INode<T>> connections);
+    void setNodes(Collection<INode<T>> nodes);
+    Set<INode<T>> getNodes();
 
     void addConnection(IConnection<T> connection);
     void delConnection(IConnection<T> connection);
-    void addManyConnections(List<IConnection<T>> connections);
-    void delManyConnections(List<IConnection<T>> connections);
-    void setConnections(List<IConnection<T>> connections);
-    List<IConnection<T>> getConnections();
+    void addManyConnections(Collection<IConnection<T>> connections);
+    void delManyConnections(Collection<IConnection<T>> connections);
+    void setConnections(Collection<IConnection<T>> connections);
+    Set<IConnection<T>> getConnections();
 
     void connectNodes(INode<T> start, INode<T> end, int weight);
     void disconnectNodes(INode<T> start, INode<T> end);

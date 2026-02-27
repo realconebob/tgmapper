@@ -15,30 +15,32 @@ public class NodeConnection implements IConnection<TdApi.Chat> {
     public NodeConnection(INode<TdApi.Chat> start, INode<TdApi.Chat> end, int weight) {
         setStart(start);
         setEnd(end);
-        setConnectionWeight(weight);
+        setWeight(weight);
     }
     public static NodeConnection emptyConnection() {
         return new NodeConnection();
     }
 
     @Override
-    public void setStart(INode<TdApi.Chat> node) {
+    public NodeConnection setStart(INode<TdApi.Chat> node) {
         InputBundle.checkInput(new InputBundle<>(node, (start) -> {
             if(start == null) throw new IllegalArgumentException("start node is null");
             if(start == end) throw new IllegalArgumentException("start node is also the end node");
             return null;
         }, "<NodeConnection::setStart> Error: Could not set starting node. Reason: "));
         start = node;
+        return this;
     }
 
     @Override
-    public void setEnd(INode<TdApi.Chat> node) {
+    public NodeConnection setEnd(INode<TdApi.Chat> node) {
         InputBundle.checkInput(new InputBundle<>(node, (end) -> {
             if(end == null) throw new IllegalArgumentException("end node is null");
             if(end == start) throw new IllegalArgumentException("end node is also the start node");
             return null;
         }, "<NodeConnection::setEnd> Error: Could not set ending node. Reason: "));
         end = node;
+        return this;
     }
 
     @Override
@@ -52,13 +54,14 @@ public class NodeConnection implements IConnection<TdApi.Chat> {
     }
 
     @Override
-    public void setConnectionWeight(int weight) {
-        InputBundle.checkInput(InputBundle.notNegative(weight, "<Connection::setConnectionWeight> Error: Connection weight must be greater than zero>"));
+    public NodeConnection setWeight(int weight) {
+        InputBundle.checkInput(InputBundle.notNegative(weight, "<Connection::setWeight> Error: Connection weight must be greater than zero>"));
         this.weight = weight;
+        return this;
     }
 
     @Override
-    public int getConnectionWeight() {
+    public int getWeight() {
         return weight;
     }
 }
