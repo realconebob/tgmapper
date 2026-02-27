@@ -178,6 +178,12 @@ public class ChannelNode implements INode<TdApi.Chat> {
         return new HashSet<>(this.incoming.values());
     }
 
+    @Override
+    public IConnection<TdApi.Chat> getIncomingByNode(INode<TdApi.Chat> start) {
+        InputBundle.checkInput(InputBundle.checkNull(start, "<ChannelNode::getIncomingByNode> Error: start is null"));
+        return incoming.get(start);
+    }
+
     private void _addOutgoing(IConnection<TdApi.Chat> connection, HashMap<INode<TdApi.Chat>, IConnection<TdApi.Chat>> map) {
         InputBundle.checkInputs(new InputBundle[] {
             new InputBundle<>(connection, (data) -> {
@@ -227,5 +233,11 @@ public class ChannelNode implements INode<TdApi.Chat> {
     @Override
     public Set<IConnection<TdApi.Chat>> getOutgoing() {
         return new HashSet<>(outgoing.values());
+    }
+
+    @Override
+    public IConnection<TdApi.Chat> getOutgoingByNode(INode<TdApi.Chat> end) {
+        InputBundle.checkInput(InputBundle.checkNull(end, "<ChannelNode::getOutgoingByNode> Error: end is null"));
+        return outgoing.get(end);
     }
 }

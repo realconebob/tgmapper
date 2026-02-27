@@ -124,6 +124,18 @@ public class ChannelGraph implements IGraph<TdApi.Chat> {
             InputBundle.checkNull(end,      "<ChannelGraph::disconnectNodes> Error: end node is null"),
         });
 
-        // TODO: Find connection between nodes in list, then kill between both
+        IConnection<TdApi.Chat>
+            incoming = end.getIncomingByNode(start),
+            outgoing = start.getOutgoingByNode(end);
+
+        if(!incoming.equals(outgoing)) throw new IllegalArgumentException("<ChannelGraph::disconnectNodes> Error: Tried getting connection between nodes, but somehow got an incongruent one");
+
+        start.delOutgoing(outgoing);
+        end.delIncoming(incoming);
+
+        // NOTE: This may or may not be redundant. I need to figure out whether equal but incongruent connections can be added to the connection
+        //  set or not. Worst case scenario is that this IS redundant and runs 2 set delete operations, where one of them is useless (so not a big deal)
+        delConnection(incoming);
+        delConnection(outgoing);
     }
 }

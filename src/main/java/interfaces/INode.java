@@ -12,6 +12,7 @@ public interface INode<T> {
     void delManyIncoming(Collection<IConnection<T>> connections);
     void setIncoming(Collection<IConnection<T>> connections);
     Set<IConnection<T>> getIncoming();
+    IConnection<T> getIncomingByNode(INode<T> start);
 
     void addOutgoing(IConnection<T> connection);
     void delOutgoing(IConnection<T> connection);
@@ -19,4 +20,5 @@ public interface INode<T> {
     void delManyOutgoing(Collection<IConnection<T>> connections);
     void setOutgoing(Collection<IConnection<T>> connections);
     Set<IConnection<T>> getOutgoing();
+    IConnection<T> getOutgoingByNode(INode<T> end);
 }
