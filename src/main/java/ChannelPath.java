@@ -5,35 +5,35 @@ import org.drinkless.tdlib.TdApi;
 import java.util.Iterator;
 
 public class ChannelPath implements INodePath<TdApi.Chat> {
-    private INode<TdApi.Chat> chat;
+    private INode<TdApi.Chat> node;
     private ChannelPath next;
     private int totalWeight;
 
     private ChannelPath() {
-        chat = null;
+        node = null;
         next = null;
         totalWeight = -1;
     }
-    public static ChannelPath emptyPath() {
-        return new ChannelPath();
-    }
-    public ChannelPath(INode<TdApi.Chat> chat, ChannelPath next, int totalWeight) {
+    public ChannelPath(INode<TdApi.Chat> node, ChannelPath next, int totalWeight) {
         this();
         InputBundle.checkInputs(new InputBundle[]{
-            InputBundle.checkNull(chat, "<ChannelPath::ChannelPath(chat, next, totalWeight)> Error: chat is null"),
+            InputBundle.checkNull(node, "<ChannelPath::ChannelPath(chat, next, totalWeight)> Error: chat is null"),
             InputBundle.checkNull(next, "<ChannelPath::ChannelPath(chat, next, totalWeight)> Error: next is null"),
             InputBundle.notNegative(totalWeight, "<ChannelPath::ChannelPath(chat, next, totalWeight)> Error: totalWeight is negative")
         });
-        this.chat = chat;
+        this.node = node;
         this.next = next;
         this.totalWeight = totalWeight;
+    }
+    public static ChannelPath emptyPath() {
+        return new ChannelPath();
     }
 
     // TODO: Consider a constructor that would ease the burden of making this incrementally while analyzing a graph via bfs/dfs/whatever
 
     @Override
     public INode<TdApi.Chat> getCurrentNode() {
-        return chat;
+        return node;
     }
 
     @Override

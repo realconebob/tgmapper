@@ -15,7 +15,7 @@ public class ChannelNode implements INode<TdApi.Chat> {
         incoming = new HashMap<>();
         outgoing = new HashMap<>();
     }
-    public ChannelNode(TdApi.Chat chatInfo, List<IConnection<TdApi.Chat>> incoming, List<IConnection<TdApi.Chat>> outgoing) {
+    public ChannelNode(TdApi.Chat chatInfo, Collection<IConnection<TdApi.Chat>> incoming, Collection<IConnection<TdApi.Chat>> outgoing) {
         this();
 
         try {
@@ -36,8 +36,8 @@ public class ChannelNode implements INode<TdApi.Chat> {
             throw new IllegalArgumentException("<ChannelNode::Constructor(incoming, outgoing)> Error: Null object in outgoing array" + ex.getMessage());
         }
     }
-    protected ChannelNode(TdApi.Chat chatInfo, HashMap<INode<TdApi.Chat>, IConnection<TdApi.Chat>> incoming, HashMap<INode<TdApi.Chat>, IConnection<TdApi.Chat>> outgoing) {
-        this(chatInfo, incoming.values().stream().toList(), outgoing.values().stream().toList());
+    private ChannelNode(TdApi.Chat chatInfo, HashMap<INode<TdApi.Chat>, IConnection<TdApi.Chat>> incoming, HashMap<INode<TdApi.Chat>, IConnection<TdApi.Chat>> outgoing) {
+        this(chatInfo, incoming.values(), outgoing.values());
     }
     public static ChannelNode emptyNode() {
         return new ChannelNode();
