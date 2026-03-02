@@ -2,6 +2,7 @@ import interfaces.IConnection;
 import interfaces.IGraph;
 import interfaces.INode;
 import utils.InputBundle;
+import utils.NotImplementedException;
 
 import java.util.*;
 
@@ -137,5 +138,20 @@ public class ChannelGraph implements IGraph<TdApi.Chat> {
         //  set or not. Worst case scenario is that this IS redundant and runs 2 set delete operations, where one of them is useless (so not a big deal)
         delConnection(incoming);
         delConnection(outgoing);
+    }
+
+    @Override
+    public void bfsAnalyze(int steps) {
+        throw new NotImplementedException("<ChannelGraph::bfsAnalyze> Error: This function is not implemented");
+    }
+
+    @Override
+    public void dfsAnalyze(int steps) {
+        throw new NotImplementedException("<ChannelGraph::dfsAnalyze> Error: This function is not implemented");
+    }
+
+    @Override
+    public void findShortest(INode<TdApi.Chat> start, INode<TdApi.Chat> end, int max_steps) {
+        throw new NotImplementedException("<ChannelGraph::findShortest> Error: This function is not implemented");
     }
 }

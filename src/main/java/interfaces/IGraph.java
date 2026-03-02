@@ -21,4 +21,7 @@ public interface IGraph<T> {
     void disconnectNodes(INode<T> start, INode<T> end);
 
     // TODO: Outline some useful analysis functions
+    void bfsAnalyze(int steps);
+    void dfsAnalyze(int steps);
+    void findShortest(INode<T> start, INode<T> end, int max_steps);
 }
