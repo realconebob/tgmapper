@@ -1,7 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import interfaces.IConnection;
-import interfaces.INode;
+import GraphLib.interfaces.IConnection;
+import GraphLib.interfaces.INode;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

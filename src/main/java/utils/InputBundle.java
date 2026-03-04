@@ -1,8 +1,7 @@
 package utils;
-import interfaces.*;
+import GraphLib.interfaces.ICallable;
 
 import java.util.Collection;
-import java.util.List;
 
 public class InputBundle<T> {
     private final ICallable<Void, T> checker;

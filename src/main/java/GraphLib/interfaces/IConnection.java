@@ -1,4 +1,4 @@
-package interfaces;
+package GraphLib.interfaces;
 
 import utils.InputBundle;
 

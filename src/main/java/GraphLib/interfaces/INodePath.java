@@ -1,4 +1,4 @@
-package interfaces;
+package GraphLib.interfaces;
 
 public interface INodePath<T> extends Iterable<INode<T>> {
     INode<T> getCurrentNode();

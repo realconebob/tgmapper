@@ -1,6 +1,5 @@
-import interfaces.IConnection;
-import interfaces.IGraph;
-import interfaces.INode;
+import GraphLib.interfaces.IConnection;
+import GraphLib.interfaces.INode;
 import utils.InputBundle;
 import utils.NotImplementedException;
 
@@ -8,7 +7,7 @@ import java.util.*;
 
 import org.drinkless.tdlib.TdApi;
 
-public class ChannelGraph implements IGraph<TdApi.Chat> {
+public class ChannelGraph extends GraphLib.GenericGraph<TdApi.Chat> {
     private final Set<INode<TdApi.Chat>> nodes;
     private final Set<IConnection<TdApi.Chat>> connections;
 

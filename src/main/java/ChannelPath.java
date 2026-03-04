@@ -1,10 +1,10 @@
-import interfaces.INode;
-import interfaces.INodePath;
+import GraphLib.interfaces.INode;
+import GraphLib.interfaces.INodePath;
 import utils.InputBundle;
 import org.drinkless.tdlib.TdApi;
 import java.util.Iterator;
 
-public class ChannelPath implements INodePath<TdApi.Chat> {
+public class ChannelPath extends GraphLib.GenericPath<TdApi.Chat> {
     private INode<TdApi.Chat> node;
     private ChannelPath next;
     private int totalWeight;
@@ -58,11 +58,12 @@ public class ChannelPath implements INodePath<TdApi.Chat> {
 
             @Override
             public boolean hasNext() {
-                return current.getNext() != null;
+                return current != null;
             }
 
             @Override
             public INode<TdApi.Chat> next() {
+                if(current == null) return null;
                 INode<TdApi.Chat> data = current.getCurrentNode();
                 current = current.getNext();
                 return data;

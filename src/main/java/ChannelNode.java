@@ -1,15 +1,11 @@
-import interfaces.*;
+import GraphLib.interfaces.IConnection;
+import GraphLib.interfaces.INode;
 import org.drinkless.tdlib.TdApi;
 import utils.InputBundle;
 
 import java.util.*;
 
-public class ChannelNode implements INode<TdApi.Chat> {
-    private TdApi.Chat chatInfo;
-    private final HashMap<INode<TdApi.Chat>, IConnection<TdApi.Chat>> incoming;
-    private final HashMap<INode<TdApi.Chat>, IConnection<TdApi.Chat>> outgoing;
-
-
+public class ChannelNode extends GraphLib.GenericNode<TdApi.Chat> {
     private ChannelNode() {
         chatInfo = null;
         incoming = new HashMap<>();

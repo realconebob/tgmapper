@@ -1,4 +1,4 @@
-import interfaces.INode;
+import GraphLib.interfaces.INode;
 import org.drinkless.tdlib.TdApi;
 import org.junit.jupiter.api.Test;
 
