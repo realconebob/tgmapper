@@ -9,7 +9,7 @@ public class GenericConnection<T> implements IConnection<T> {
     private INode<T> end;
     private int weight;
 
-    private GenericConnection() {
+    protected GenericConnection() {
         start = null;
         end = null;
         weight = 0;

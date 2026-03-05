@@ -15,7 +15,7 @@ public class GenericGraph<T> implements IGraph<T> {
     private final Set<INode<T>> nodes;
     private final Set<IConnection<T>> connections;
 
-    private GenericGraph() {
+    protected GenericGraph() {
         nodes = new HashSet<>();
         connections = new HashSet<>();
     }

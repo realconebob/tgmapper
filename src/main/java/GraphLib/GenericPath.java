@@ -11,7 +11,7 @@ public class GenericPath<T> implements INodePath<T> {
     private GenericPath<T> next;
     private int totalWeight;
 
-    private GenericPath() {
+    protected GenericPath() {
         node = null;
         next = null;
         totalWeight = -1;

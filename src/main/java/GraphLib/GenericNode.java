@@ -17,7 +17,7 @@ public class GenericNode<T> implements INode<T> {
     private final HashMap<INode<T>, IConnection<T>> incoming;
     private final HashMap<INode<T>, IConnection<T>> outgoing;
 
-    private GenericNode() {
+    protected GenericNode() {
         nodeData = null;
         incoming = new HashMap<>();
         outgoing = new HashMap<>();
