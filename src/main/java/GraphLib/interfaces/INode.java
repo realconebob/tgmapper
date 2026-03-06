@@ -2,6 +2,8 @@ package GraphLib.interfaces;
 import java.util.Collection;
 import java.util.Set;
 
+// TODO: Update void returns to bools
+
 public interface INode<T> {
     void setNodeData(T data);
     T getNodeData();

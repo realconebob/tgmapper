@@ -14,13 +14,16 @@ import java.util.Set;
 public class GenericGraph<T> implements IGraph<T> {
     private final Set<INode<T>> nodes;
     private final Set<IConnection<T>> connections;
+    // TODO: Consider how to store paths from one node to the next after analysis
 
     protected GenericGraph() {
         nodes = new HashSet<>();
         connections = new HashSet<>();
     }
-    public GenericGraph(List<INode<T>> nodes, List<IConnection<T>> connections) {
+    public GenericGraph(List<INode<T>> nodes, List<IConnection<T>> connections) throws IllegalArgumentException {
         this();
+
+        // TODO: Revisit this
 
         try {
             addManyNodes(nodes);
@@ -37,31 +40,41 @@ public class GenericGraph<T> implements IGraph<T> {
 
     @Override
     public void addNode(INode<T> node) {
-        InputBundle.checkInput(InputBundle.checkNull(node, "<GenericGraph::addNode> Error: node is null"));
+        try {
+            InputBundle.checkInput(InputBundle.checkNull(node, "<GenericGraph::addNode> Error: node is null"));
+        } catch (Exception _) {return;}
         nodes.add(node);
     }
 
     @Override
     public void delNode(INode<T> node) {
-        InputBundle.checkInput(InputBundle.checkNull(node, "<GenericGraph::delNode> Error: node is null"));
+        try {
+            InputBundle.checkInput(InputBundle.checkNull(node, "<GenericGraph::delNode> Error: node is null"));
+        } catch (Exception _) {return;}
         nodes.remove(node);
     }
 
     @Override
     public void addManyNodes(Collection<INode<T>> nodes) {
-        InputBundle.checkInput(InputBundle.nullList(nodes, "<GenericGraph::addManyNodes> Error: nodes is null, or contains null entry"));
+        try {
+            InputBundle.checkInput(InputBundle.nullList(nodes, "<GenericGraph::addManyNodes> Error: nodes is null, or contains null entry"));
+        } catch (Exception _) {return;}
         this.nodes.addAll(nodes);
     }
 
     @Override
     public void delManyNodes(Collection<INode<T>> nodes) {
-        InputBundle.checkInput(InputBundle.nullList(nodes, "<GenericGraph::delManyNodes> Error: nodes is null, or contains null entry"));
+        try {
+            InputBundle.checkInput(InputBundle.nullList(nodes, "<GenericGraph::delManyNodes> Error: nodes is null, or contains null entry"));
+        } catch (Exception _) {return;}
         nodes.forEach(this.nodes::remove);
     }
 
     @Override
     public void setNodes(Collection<INode<T>> nodes) {
-        InputBundle.checkInput(InputBundle.nullList(nodes, "<GenericGraph::setNodes> Error: nodes is null, or contains null entry"));
+        try {
+            InputBundle.checkInput(InputBundle.nullList(nodes, "<GenericGraph::setNodes> Error: nodes is null, or contains null entry"));
+        } catch (Exception _) {return;}
         this.nodes.clear();
         this.nodes.addAll(nodes);
     }
@@ -73,31 +86,41 @@ public class GenericGraph<T> implements IGraph<T> {
 
     @Override
     public void addConnection(IConnection<T> connection) {
-        InputBundle.checkInput(InputBundle.checkNull(connection, "<GenericGraph::addConnection> Error: connection is null"));
+        try {
+            InputBundle.checkInput(InputBundle.checkNull(connection, "<GenericGraph::addConnection> Error: connection is null"));
+        } catch (Exception _) {return;}
         connections.add(connection);
     }
 
     @Override
     public void delConnection(IConnection<T> connection) {
-        InputBundle.checkInput(InputBundle.checkNull(connection, "<GenericGraph::delConnection> Error: connection is null"));
+        try {
+            InputBundle.checkInput(InputBundle.checkNull(connection, "<GenericGraph::delConnection> Error: connection is null"));
+        } catch (Exception _) {return;}
         connections.remove(connection);
     }
 
     @Override
     public void addManyConnections(Collection<IConnection<T>> connections) {
-        InputBundle.checkInput(InputBundle.nullList(connections, "<GenericGraph::addManyConnections> Error: connections is null, or contains a null entry"));
+        try {
+            InputBundle.checkInput(InputBundle.nullList(connections, "<GenericGraph::addManyConnections> Error: connections is null, or contains a null entry"));
+        } catch (Exception _) {return;}
         this.connections.addAll(connections);
     }
 
     @Override
     public void delManyConnections(Collection<IConnection<T>> connections) {
-        InputBundle.checkInput(InputBundle.nullList(connections, "<GenericGraph::delManyConnections> Error: connections is null, or contains a null entry"));
+        try {
+            InputBundle.checkInput(InputBundle.nullList(connections, "<GenericGraph::delManyConnections> Error: connections is null, or contains a null entry"));
+        } catch (Exception _) {return;}
         connections.forEach(this.connections::remove);
     }
 
     @Override
     public void setConnections(Collection<IConnection<T>> connections) {
-        InputBundle.checkInput(InputBundle.nullList(connections, "<GenericGraph::setConnections> Error: connections is null, or contains a null entry"));
+        try {
+            InputBundle.checkInput(InputBundle.nullList(connections, "<GenericGraph::setConnections> Error: connections is null, or contains a null entry"));
+        } catch (Exception _) {return;}
         this.connections.clear();
         this.connections.addAll(connections);
     }
@@ -109,11 +132,13 @@ public class GenericGraph<T> implements IGraph<T> {
 
     @Override
     public void connectNodes(INode<T> start, INode<T> end, int weight) {
-        InputBundle.checkInputs(new InputBundle[]{
-            InputBundle.checkNull       (start,     "<GenericGraph::connectNodes> Error: start node is null"),
-            InputBundle.checkNull       (end,       "<GenericGraph::connectNodes> Error: end node is null"),
-            InputBundle.notNegative     (weight,    "<GenericGraph::connectNodes> Error: weight is less than zero"),
-        });
+        try {
+            InputBundle.checkInputs(new InputBundle[]{
+                InputBundle.checkNull       (start,     "<GenericGraph::connectNodes> Error: start node is null"),
+                InputBundle.checkNull       (end,       "<GenericGraph::connectNodes> Error: end node is null"),
+                InputBundle.notNegative     (weight,    "<GenericGraph::connectNodes> Error: weight is less than zero"),
+            });
+        } catch (Exception _) {return;}
 
         IConnection<T> con = new GenericConnection<>(start, end, weight);
         start.addOutgoing(con);
@@ -123,10 +148,12 @@ public class GenericGraph<T> implements IGraph<T> {
 
     @Override
     public void disconnectNodes(INode<T> start, INode<T> end) {
-        InputBundle.checkInputs(new InputBundle[]{
-            InputBundle.checkNull(start,    "<GenericGraph::disconnectNodes> Error: start node is null"),
-            InputBundle.checkNull(end,      "<GenericGraph::disconnectNodes> Error: end node is null"),
-        });
+        try {
+            InputBundle.checkInputs(new InputBundle[]{
+                InputBundle.checkNull(start, "<GenericGraph::disconnectNodes> Error: start node is null"),
+                InputBundle.checkNull(end, "<GenericGraph::disconnectNodes> Error: end node is null"),
+            });
+        } catch (Exception _) {return;}
 
         IConnection<T>
             incoming = end.getIncomingByNode(start),

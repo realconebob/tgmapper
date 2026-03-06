@@ -2,6 +2,8 @@ package GraphLib.interfaces;
 import java.util.Collection;
 import java.util.Set;
 
+// TODO: Update void returns to bools
+
 public interface IGraph<T> {
     void addNode(INode<T> node);
     void delNode(INode<T> node);

@@ -2,6 +2,7 @@ package GraphLib;
 
 import GraphLib.interfaces.IConnection;
 import GraphLib.interfaces.INode;
+import GraphLib.nils.NilConnection;
 import utils.InputBundle;
 
 public class GenericConnection<T> implements IConnection<T> {
@@ -14,33 +15,45 @@ public class GenericConnection<T> implements IConnection<T> {
         end = null;
         weight = 0;
     }
-    public GenericConnection(INode<T> start, INode<T> end, int weight) {
+    public GenericConnection(INode<T> start, INode<T> end, int weight) throws IllegalArgumentException {
+        this();
+
         setStart(start);
         setEnd(end);
         setWeight(weight);
+
+        InputBundle.checkInputs(new InputBundle[]{
+            InputBundle.checkNull(start, "start is null"),
+            InputBundle.checkNull(end, "end is null"),
+            InputBundle.notNegative(weight, "weight is negative")
+        });
     }
     public static <T> GenericConnection<T> emptyConnection() {
         return new GenericConnection<>();
     }
 
     @Override
-    public GenericConnection<T> setStart(INode<T> node) {
-        InputBundle.checkInput(new InputBundle<>(node, (start) -> {
-            if(start == null) throw new IllegalArgumentException("start node is null");
-            if(start == end) throw new IllegalArgumentException("start node is also the end node");
-            return null;
-        }, "<GenericConnection::setStart> Error: Could not set starting node. Reason: "));
+    public IConnection<T> setStart(INode<T> node) {
+        try {
+            InputBundle.checkInputs(new InputBundle[] {
+                InputBundle.checkNull(node, "node is null"),
+                InputBundle.checkEquals(node, end, "new start is also current end")
+            });
+        } catch (Exception _) {return new NilConnection<>();}
+
         start = node;
         return this;
     }
 
     @Override
-    public GenericConnection<T> setEnd(INode<T> node) {
-        InputBundle.checkInput(new InputBundle<>(node, (end) -> {
-            if(end == null) throw new IllegalArgumentException("end node is null");
-            if(end == start) throw new IllegalArgumentException("end node is also the start node");
-            return null;
-        }, "<GenericConnection::setEnd> Error: Could not set ending node. Reason: "));
+    public IConnection<T> setEnd(INode<T> node) {
+        try {
+            InputBundle.checkInputs(new InputBundle[]{
+                InputBundle.checkNull(node, "node is null"),
+                InputBundle.checkEquals(node, start, "new end is current start")
+            });
+        } catch (Exception _) {return new NilConnection<>();}
+
         end = node;
         return this;
     }
@@ -56,8 +69,11 @@ public class GenericConnection<T> implements IConnection<T> {
     }
 
     @Override
-    public GenericConnection<T> setWeight(int weight) {
-        InputBundle.checkInput(InputBundle.notNegative(weight, "<Connection::setWeight> Error: Connection weight must be greater than zero>"));
+    public IConnection<T> setWeight(int weight) {
+        try {
+            InputBundle.checkInput(InputBundle.notNegative(weight, "<Connection::setWeight> Error: Connection weight must be greater than zero>"));
+        } catch (Exception _) {return new NilConnection<>();}
+
         this.weight = weight;
         return this;
     }

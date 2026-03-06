@@ -16,7 +16,7 @@ public class GenericPath<T> implements INodePath<T> {
         next = null;
         totalWeight = -1;
     }
-    public GenericPath(INode<T> node, GenericPath<T> next, int totalWeight) {
+    public GenericPath(INode<T> node, GenericPath<T> next, int totalWeight) throws IllegalArgumentException {
         this();
         InputBundle.checkInputs(new InputBundle[]{
             InputBundle.checkNull(node, "<GenericPath::GenericPath(chat, next, totalWeight)> Error: chat is null"),

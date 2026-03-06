@@ -14,13 +14,29 @@ public class InputBundle<T> {
         this.checker = checker;
         this.msg = msg;
     }
-    static public InputBundle<?> checkNull(Object input, String msg) {
+
+    /**
+     * Check an object for nullity. Throws if `input == null`
+     * @param input
+     * @param msg
+     * @return
+     * @param <T>
+     */
+    static public <T> InputBundle<T> checkNull(T input, String msg) {
         return new InputBundle<>(input, data -> {
             if(data == null) throw new IllegalArgumentException("<InputBundle::checkNull>: given input was null");
             return null;
         }, msg);
     }
-    static public InputBundle<? extends Collection<?>> nullList(Collection<?> input, String msg) {
+
+    /**
+     * Check a list of objects for nullity. Throws if the input, or any object in the input is `null`
+     * @param input
+     * @param msg
+     * @return
+     * @param <T>
+     */
+    static public <T extends Collection<?>> InputBundle<T> nullList(T input, String msg) {
         return new InputBundle<>(input, data -> {
             if(data == null) throw new IllegalArgumentException("<InputBundle::nullList>: input list was null");
             for(Object o : data) {
@@ -29,10 +45,48 @@ public class InputBundle<T> {
             return null;
         }, msg);
     }
-    static public InputBundle<? extends Number> notNegative(Number input, String msg) {
-        return new InputBundle<>(input, data -> {
+
+    /**
+     * Check that input is not negative. Throws if `input < 0`
+     * @param input
+     * @param msg
+     * @return
+     * @param <T>
+     */
+    static public <T extends Number> InputBundle<T> notNegative(T input, String msg) {
+        return new InputBundle<T>(input, data -> {
             if(data == null) throw new IllegalArgumentException("<InputBundle::notNegative>: given input was null");
             if(data.doubleValue() < 0) throw new IllegalArgumentException("<InputBundle::notNegative>: given input was negative");
+            return null;
+        }, msg);
+    }
+
+    /**
+     * Check two objects for equality using `.equals()`. Throws when objects are not equal
+     * @param obj1
+     * @param obj2
+     * @param msg
+     * @return
+     */
+    static public <T> InputBundle<T> checkNotEquals(T obj1, T obj2, String msg) {
+        return new InputBundle<>(null, _ -> {
+            if(obj1 == null) throw new IllegalArgumentException("<InputBundle::checkNotEquals>: obj1 is null");
+            if(!obj1.equals(obj2)) throw new IllegalArgumentException("<InputBundle::checkNotEquals>: obj1 and obj2 are not equal");
+            return null;
+        }, msg);
+    }
+
+    /**
+     * Check two objects for equality using `.equals()`. Throws when objects are equal
+     * @param obj1
+     * @param obj2
+     * @param msg
+     * @return
+     */
+    static public <T> InputBundle<T> checkEquals(T obj1, T obj2, String msg) {
+        return new InputBundle<>(null, _ -> {
+            if(obj1 == null) throw new IllegalArgumentException("<InputBundle::checkEquals>: obj1 is null");
+            if(obj1.equals(obj2)) throw new IllegalArgumentException("<InputBundle::checkEquals>: obj1 and obj2 are equal");
             return null;
         }, msg);
     }
