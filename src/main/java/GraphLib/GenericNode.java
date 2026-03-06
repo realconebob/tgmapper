@@ -38,11 +38,12 @@ public class GenericNode<T> implements INode<T> {
     }
 
     @Override
-    public void setNodeData(T data) {
+    public boolean setNodeData(T data) {
         try {
             InputBundle.checkInput(InputBundle.checkNull(data, "<GenericNode::setNodeData> Error: chat data is null"));
-        } catch (Exception _) {return;}
+        } catch (Exception _) {return false;}
         nodeData = data;
+        return true;
     }
 
     @Override
@@ -62,49 +63,54 @@ public class GenericNode<T> implements INode<T> {
     }
 
     @Override
-    public void addIncoming(IConnection<T> connection) {
+    public boolean addIncoming(IConnection<T> connection) {
         try {
             _addIncoming(connection, incoming);
-        } catch (Exception _) {}
+        } catch (Exception _) {return false;}
+        return true;
     }
 
     @Override
-    public void delIncoming(IConnection<T> connection) {
+    public boolean delIncoming(IConnection<T> connection) {
         try {
             InputBundle.checkInput(InputBundle.checkNull(connection, "<GenericNode::delIncoming> Error: connection is null"));
-        } catch (Exception _) {return;}
+        } catch (Exception _) {return false;}
         incoming.remove(connection.getStart());
+        return true;
     }
 
     @Override
-    public void addManyIncoming(Collection<IConnection<T>> connections) {
+    public boolean addManyIncoming(Collection<IConnection<T>> connections) {
         HashMap<INode<T>, IConnection<T>> temp = new HashMap<>();
         try {
             InputBundle.checkInput(InputBundle.nullList(connections, "<GenericNode::addManyIncoming> Error: connections is null, or contains null entry"));
             connections.forEach((connection) -> _addIncoming(connection, temp));
-        } catch (Exception _) {return;}
+        } catch (Exception _) {return false;}
 
         incoming.putAll(temp);
+        return true;
     }
 
     @Override
-    public void delManyIncoming(Collection<IConnection<T>> connections) {
+    public boolean delManyIncoming(Collection<IConnection<T>> connections) {
         try {
             InputBundle.checkInput(InputBundle.nullList(connections, "<GenericNode::delManyIncoming> Error: connections is null, or contains null entry"));
-        } catch (Exception _) {return;}
+        } catch (Exception _) {return false;}
         connections.forEach(this::delIncoming);
+        return true;
 
         // TODO: Change to be batch based
         // NOTE: This may not need to be changed
     }
 
     @Override
-    public void setIncoming(Collection<IConnection<T>> connections) {
+    public boolean setIncoming(Collection<IConnection<T>> connections) {
         try {
             InputBundle.checkInput(InputBundle.nullList(connections, "<GenericNode::setIncoming> Error: connections is null, or contains null entry"));
-        } catch (Exception _) {return;}
+        } catch (Exception _) {return false;}
         incoming.clear();
         addManyIncoming(connections);
+        return true;
     }
 
     @Override
@@ -129,46 +135,51 @@ public class GenericNode<T> implements INode<T> {
     }
 
     @Override
-    public void addOutgoing(IConnection<T> connection) {
+    public boolean addOutgoing(IConnection<T> connection) {
         try {
             _addOutgoing(connection, outgoing);
-        } catch (Exception _) {}
+        } catch (Exception _) {return false;}
+        return true;
     }
 
     @Override
-    public void delOutgoing(IConnection<T> connection) {
+    public boolean delOutgoing(IConnection<T> connection) {
         try {
             InputBundle.checkInput(InputBundle.checkNull(connection, "<GenericNode::delOutgoing> Error: connection is null"));
-        } catch (Exception _) {return;}
+        } catch (Exception _) {return false;}
         outgoing.remove(connection.getEnd());
+        return true;
     }
 
     @Override
-    public void addManyOutgoing(Collection<IConnection<T>> connections) {
+    public boolean addManyOutgoing(Collection<IConnection<T>> connections) {
         HashMap<INode<T>, IConnection<T>> temp = new HashMap<>();
         try {
             InputBundle.checkInput(InputBundle.nullList(connections, "<GenericNode::addManyOutgoing> Error: connections is null, or contains null entry"));
             connections.forEach((connection) -> _addOutgoing(connection, temp));
-        } catch (Exception _) {return;}
+        } catch (Exception _) {return false;}
         outgoing.putAll(temp);
+        return true;
     }
 
 
     @Override
-    public void delManyOutgoing(Collection<IConnection<T>> connections) {
+    public boolean delManyOutgoing(Collection<IConnection<T>> connections) {
         try {
             InputBundle.checkInput(InputBundle.nullList(connections, "<GenericNode::delManyOutgoing> Error: connections is null, or contains null entry"));
-        } catch (Exception _) {return;}
+        } catch (Exception _) {return false;}
         connections.forEach(this::delOutgoing);
+        return true;
     }
 
     @Override
-    public void setOutgoing(Collection<IConnection<T>> connections) {
+    public boolean setOutgoing(Collection<IConnection<T>> connections) {
         try {
             InputBundle.checkInput(InputBundle.nullList(connections, "<GenericNode::setOutgoing> Error: connections is null, or contains null entry"));
-        } catch (Exception _) {return;}
+        } catch (Exception _) {return false;}
         outgoing.clear();
         addManyOutgoing(connections);
+        return true;
     }
 
     @Override
