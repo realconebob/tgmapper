@@ -1,4 +1,4 @@
-package GraphLib.interfaces;
+package utils;
 
 public interface ICallable<R, T> {
     R call(T data);
