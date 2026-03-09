@@ -102,7 +102,8 @@ public class InputBundle<T> {
 
     public static void checkInputs(InputBundle<?>[] inputs) throws IllegalArgumentException {
         if (inputs == null) throw new IllegalArgumentException("<InputBundle::checkInputs> Error: inputs cannot be null");
-        for (InputBundle<?> input : inputs) {
+        for(int i = 0; i < inputs.length; i++) {
+            InputBundle<?> input = inputs[i];
             if(input == null) {
                 System.err.println("<InputBundle::checkInputs> Warning: null input object in inputs array, skipping");
                 continue;

@@ -21,13 +21,15 @@ public class ChannelNode {
             InputBundle.notNegative(id, "id is negative"),
             InputBundle.checkNull(chat, "chat is null"),
             InputBundle.checkNull(outgoing, "outgoing is null"),
-            InputBundle.nullList(outgoing.keySet(), "outgoing contained null key"),
-            InputBundle.nullList(outgoing.values(), "outgoing contained null val"),
-            new InputBundle<>(outgoing.values(), (values) -> {
-                for(Integer value: values) if(value < 0) throw new IllegalArgumentException();
-                return null;
-            }, "an outgoing weight was negative")
         });
+
+        if(outgoing == null) throw new IllegalArgumentException();
+        InputBundle.checkInput(InputBundle.nullList(outgoing.keySet(), ""));
+        InputBundle.checkInput(InputBundle.nullList(outgoing.values(), ""));
+        InputBundle.checkInput(new InputBundle<>(outgoing.values(), (values) -> {
+            for(Integer value: values) if(value < 0) throw new IllegalArgumentException();
+            return null;
+        }, "an outgoing weight was negative"));
 
         this.outgoing.putAll(outgoing);
     }
