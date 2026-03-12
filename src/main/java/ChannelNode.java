@@ -1,5 +1,6 @@
 import org.drinkless.tdlib.TdApi;
 import utils.InputBundle;
+import utils.NotImplementedException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,11 @@ public class ChannelNode {
         outgoing = new HashMap<>();
     }
     static public ChannelNode empty() {return new ChannelNode();}
+    static public ChannelNode idOnly(long id) {
+        ChannelNode res = ChannelNode.empty();
+        res.id = id;
+        return res;
+    }
     public ChannelNode(long id, TdApi.Chat chat, Map<Long, Integer> outgoing) throws IllegalArgumentException {
         this();
         InputBundle.checkInputs(new InputBundle[]{
@@ -44,6 +50,11 @@ public class ChannelNode {
         id = chat.id;
 
         return true;
+    }
+
+    public boolean setId(long id) {
+        throw new NotImplementedException();
+//        return setChat(new TdApi.GetChat(id) /* This is a chat/can be made into a chat somehow? */);
     }
 
     public boolean setOutgoingWeight(long id, int weight) {

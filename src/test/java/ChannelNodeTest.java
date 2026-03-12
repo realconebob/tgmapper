@@ -52,6 +52,23 @@ class ChannelNodeTest {
 
     @Test
     void fromFactory() {
+        Map<Long, Integer> constructionMap = new HashMap<>();
+        constructionMap.put((long)1, 0); // Self "Connection". Encodes the node's chat
+        constructionMap.put((long)2, 5);
+        constructionMap.put((long)7, 3);
+        constructionMap.put((long)10, 90);
 
+        ChannelNode node = null;
+        try {
+            node = new ChannelNode(constructionMap);
+        } catch (Exception ex) {
+            fail(ex);
+        }
+        assertNotNull(node);
+
+        assertEquals(5, node.getOutgoingWeight(2));
+        assertEquals(3, node.getOutgoingWeight(7));
+        assertEquals(90, node.getOutgoingWeight(10));
+        assertEquals(-1, node.getOutgoingWeight(1));    // Should not return a connection weight for the self connection
     }
 }

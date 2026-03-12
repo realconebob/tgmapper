@@ -1,52 +1,64 @@
 import utils.*;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ChannelGraph {
-    private final Set<ChannelNode> nodes;
+    private final Map<Long, ChannelNode> nodes;
 
     private ChannelGraph() {
-        nodes = new HashSet<>();
+        nodes = new HashMap<>();
     }
     public static ChannelGraph empty() {return new ChannelGraph();}
     public ChannelGraph(Collection<ChannelNode> nodes) throws IllegalArgumentException {
         this();
         InputBundle.checkInput(InputBundle.nullList(nodes, "nodes, or an entry in nodes, is null"));
-        this.nodes.addAll(nodes);
+        addNodes(nodes);
     }
 
-    boolean setNodes(Collection<ChannelNode> nodes) {
+    public boolean setNodes(Collection<ChannelNode> nodes) {
         try {InputBundle.checkInput(InputBundle.nullList(nodes, ""));} catch (Exception _) {return false;}
         this.nodes.clear();
-        this.nodes.addAll(nodes);
-        return true;
+        return addNodes(nodes);
+        // TODO: Consider batching
     }
 
-    boolean addNode(ChannelNode node) {
+    public boolean addNode(ChannelNode node) {
         if(node == null) return false;
-        nodes.add(node);
+        nodes.put(node.getId(), node);
         return true;
     }
 
-    boolean addNodes(Collection<ChannelNode> node) {
-        try {InputBundle.checkInput(InputBundle.nullList(node, ""));} catch (Exception _) {return false;}
-        this.nodes.addAll(node);
+    public boolean addNodes(Collection<ChannelNode> nodes) {
+        try {InputBundle.checkInput(InputBundle.nullList(nodes, ""));} catch (Exception _) {return false;}
+        for(ChannelNode node: nodes)
+            this.nodes.put(node.getId(), node);
+
+        // TODO: Consider batching
         return true;
     }
 
-    boolean delNode(ChannelNode node) {
+    public boolean delNode(ChannelNode node) {
         if(node == null) return false;
-        nodes.remove(node);
+        nodes.remove(node.getId());
         return true;
     }
 
-    boolean delNodes(Collection<ChannelNode> node) {
-        try {InputBundle.checkInput(InputBundle.nullList(node, ""));} catch (Exception _) {return false;}
-        this.nodes.removeAll(node);
+    public boolean delNodes(Collection<ChannelNode> nodes) {
+        try {InputBundle.checkInput(InputBundle.nullList(nodes, ""));} catch (Exception _) {return false;}
+        for(ChannelNode node: nodes)
+            this.nodes.remove(node.getId());
+
+        // TODO: Consider batching
+
         return true;
+    }
+
+    public Set<ChannelNode> getNodes() {
+        return new HashSet<>(nodes.values());
+    }
+
+    public boolean doesNodeExist(long id) {
+        return nodes.containsKey(id);
     }
 
     boolean dfs() {throw new NotImplementedException();}
