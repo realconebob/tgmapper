@@ -54,9 +54,19 @@ class ChannelNodeTest {
     void fromFactory() {
         Map<Long, Integer> constructionMap = new HashMap<>();
         constructionMap.put((long)1, 0); // Self "Connection". Encodes the node's chat
+        constructionMap.put((long)3, 0); // A second self "Connection". This existing should throw an error
         constructionMap.put((long)2, 5);
         constructionMap.put((long)7, 3);
         constructionMap.put((long)10, 90);
+        constructionMap.put((long)13, -3); // Negative weight should throw
+
+        assertThrows(IllegalArgumentException.class, () -> new ChannelNode(null));
+        assertThrows(IllegalArgumentException.class, () -> new ChannelNode(constructionMap));
+
+        constructionMap.remove((long)3);
+        assertThrows(IllegalArgumentException.class, () -> new ChannelNode(constructionMap));
+
+        constructionMap.remove((long)13);
 
         ChannelNode node = null;
         try {
@@ -70,5 +80,6 @@ class ChannelNodeTest {
         assertEquals(3, node.getOutgoingWeight(7));
         assertEquals(90, node.getOutgoingWeight(10));
         assertEquals(-1, node.getOutgoingWeight(1));    // Should not return a connection weight for the self connection
+        assertEquals(1, node.getId());
     }
 }

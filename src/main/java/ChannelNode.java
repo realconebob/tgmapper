@@ -21,6 +21,7 @@ public class ChannelNode {
         res.id = id;
         return res;
     }
+
     public ChannelNode(long id, TdApi.Chat chat, Map<Long, Integer> outgoing) throws IllegalArgumentException {
         this();
         InputBundle.checkInputs(new InputBundle[]{
@@ -38,6 +39,29 @@ public class ChannelNode {
         }, "an outgoing weight was negative"));
 
         this.outgoing.putAll(outgoing);
+    }
+    public ChannelNode(long id) throws IllegalArgumentException {
+        this();
+        setId(id);
+    }
+    public ChannelNode(Map<Long, Integer> map) {
+        this();
+        if(map == null) throw new IllegalArgumentException();
+
+        long hack = -1; int zerocount = 0; Integer value;
+        for(Map.Entry<Long, Integer> nodeEntry: map.entrySet()) {
+            value = nodeEntry.getValue();
+            if(value < 0) throw new IllegalArgumentException();
+            if(value == 0) {
+                hack = nodeEntry.getKey();
+                zerocount++;
+                if(zerocount >= 2) throw new IllegalArgumentException();
+            }
+        }
+        outgoing.putAll(map);
+        outgoing.remove(hack);
+//        setId(hack); // Currently unimplemented
+        id = hack; // TODO: call setId once this is properly implemented
     }
 
     public long getId() {return id;}
